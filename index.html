@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Campo de Girasoles</title>
+<!-- Vinculamos los estilos externos -->
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- PANTALLA DE BIENVENIDA CON BUBU -->
+  <div id="welcomeScreen" class="welcome-overlay">
+    <div class="welcome-card">
+      <div class="welcome-badge">🌻 21 de Septiembre</div>
+      
+      <div class="welcome-img-container">
+        <img src="bubu.gif" alt="Bubu" class="welcome-bear-img">
+      </div>
+
+      <h1 class="welcome-title">Flores Para Ti</h1>
+      <p class="welcome-subtitle">Un pequeño detalle preparado especialmente para hoy.</p>
+      
+      <button id="enterBtn" class="welcome-btn">
+        <span>Abrir de Regalo</span>
+      </button>
+    </div>
+  </div>
+</div>
+<div class="pin">
+  <div class="sky"></div>
+  <div id="rainContainer"></div>
+  <div id="starsContainer"></div>
+  <div class="sun" id="sun"></div>
+  <div class="flare" id="flare"></div>
+  <div class="flareRing" id="ring1"></div>
+  <div class="flareRing" id="ring2"></div>
+  <div class="ground"></div>
+  <div id="fireflies"></div>
+  <div class="field" id="field"></div>
+  <div class="hero" id="hero"></div>
+
+  <div class="instruction" id="instruction">
+    Desliza para caminar entre los girasoles
+    <span class="chev"></span>
+  </div>
+
+  <div class="card" id="card">
+    <div class="date" id="cardDate">21 DE SEPTIEMBRE</div>
+    <h1 id="cardTitle">Para Maylin 🌻</h1>
+    
+   <!-- CARRUSEL DE 4 FOTOS -->
+    <div class="photo-frame">
+      <img src="foto1.png" class="active" alt="Foto 1">
+      <img src="foto2.png" alt="Foto 2">
+      <img src="foto3.png" alt="Foto 3">
+      <img src="foto4.png" alt="Foto 4">
+    </div>
+    <div class="photo-dots">
+      <span class="photo-dot active" onclick="currentPhoto(0)"></span>
+      <span class="photo-dot" onclick="currentPhoto(1)"></span>
+      <span class="photo-dot" onclick="currentPhoto(2)"></span>
+      <span class="photo-dot" onclick="currentPhoto(3)"></span>
+    </div>
+
+    <div id="cardBody">
+      <p>Dicen que regalar flores amarillas</p>
+      <p>es el símbolo de un futuro juntos,</p>
+      <p>y hoy este campo de girasoles brilla</p>
+      <p>para recordarte cuánto te quiero.</p>
+    </div>
+    <div class="sign" id="cardSign">— Con todo mi cariño</div>
+  </div>
+</div>
+
+<!-- AUDIO DE FONDO AUTOMÁTICO -->
+<audio id="bgMusic" loop>
+  <source src="Flores Amarillas.mp3" type="audio/mpeg">
+</audio>
+<!-- Vinculamos la lógica de JavaScript -->
+<script src="script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,454 @@
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{width:100%;}
+body{
+  font-family: Georgia, "Times New Roman", serif;
+  background:#1a0f2e;
+  color:#fff;
+  height:340vh;
+  overflow-x:hidden;
+}
+
+.pin{
+  position:sticky;
+  top:0;
+  width:100%;
+  height:100vh;
+  overflow:hidden;
+}
+
+.sky{
+  position:absolute; inset:0;
+  background:linear-gradient(180deg,
+    #3a1f5c 0%, #6b2f5e 25%, #b8506b 50%, #e08a5b 75%, #3a1c12 100%);
+}
+.sun{
+  position:absolute; left:50%; top:45%; width:260px; height:260px;
+  transform:translate(-50%,-100%); border-radius:50%; /* El sol descansa exactamente sobre el horizonte */
+  background:radial-gradient(circle,#fff3c4 0%,#ffcf6b 45%,#ff9d4d 75%,rgba(255,157,77,0) 100%);
+  filter:blur(2px);
+  will-change:transform,opacity;
+}
+.flare{
+  position:absolute; left:50%; top:45%; width:600px; height:600px;
+  transform:translate(-50%,-85%) scale(.4);
+  border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle,
+    rgba(255,255,255,.95) 0%,
+    rgba(255,232,170,.55) 14%,
+    rgba(255,190,110,.22) 38%,
+    rgba(255,190,110,0) 62%);
+  mix-blend-mode:screen;
+  opacity:0;
+  will-change:opacity,transform;
+}
+.flareRing{
+  position:absolute; left:50%; top:45%; transform:translate(-50%,-85%); border-radius:50%;
+  border:1.5px solid rgba(255,225,170,.55);
+  mix-blend-mode:screen;opacity:0;pointer-events:none;
+  will-change:opacity,transform;
+}
+.ground{
+  position:absolute; left:0; right:0; top:45%; bottom:0;
+  background:linear-gradient(180deg, 
+    rgba(61, 28, 14, 0) 0%,        /* Transparente en el horizonte */
+    rgba(45, 40, 18, 0.8) 35%,     /* Transición con tonos terrosos y verdosos */
+    #182410 100%                   /* Termina abajo con un verde musgo/oliva oscuro muy natural */
+  );
+}
+
+.field{position:absolute;inset:0;}
+.flower{
+  position:absolute;
+  will-change:transform,opacity;
+  transform-origin:50% 14%;
+  /* Estas dos líneas fuerzan el uso de la tarjeta gráfica: */
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+.flower svg{display:block;width:100%;height:100%;overflow:visible;}
+
+.hero{
+  position:absolute;left:50%;top:54%;
+  transform:translate(-50%,-50%);
+  will-change:transform;
+}
+.hero svg{display:block;width:100%;height:100%;overflow:visible;}
+
+.firefly{
+  position:absolute;width:4px;height:4px;border-radius:50%;
+  background:#ffe89a;box-shadow:0 0 8px 2px rgba(255,220,120,.8);
+  opacity:.7;animation:drift 6s ease-in-out infinite;
+}
+@keyframes drift{0%,100%{transform:translateY(0)}50%{transform:translateY(-18px)}}
+
+/* --- CORREDOR CENTRAL Y DISEÑO PARA EL TEXTO DE INSTRUCCIÓN --- */
+#instruction {
+  position: absolute;
+  left: 50%;
+  bottom: 7%;
+  transform: translateX(-50%);
+  width: 88%;
+  max-width: 310px;
+  background: rgba(20, 12, 30, 0.82); /* Fondo oscuro elegante para separar del fondo */
+  border: 1px solid rgba(255, 215, 120, 0.35); /* Borde dorado sutil */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 12px 18px;
+  border-radius: 20px; /* Bordes redondeados tipo píldora */
+  text-align: center;
+  letter-spacing: 2px;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  color: #fff2d8;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+  will-change: opacity;
+  z-index: 100;
+}
+
+/* Ajuste de la flechita animada debajo del texto */
+#instruction .chev {
+  display: block;
+  margin: 6px auto 0 auto;
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid #fff2d8;
+  border-bottom: 2px solid #fff2d8;
+  transform: rotate(45deg);
+  animation: bounce 1.6s ease-in-out infinite;
+}
+
+
+.instruction .chev{
+  display:block;margin:10px auto 0;width:14px;height:14px;
+  border-right:2px solid #fff2d8;border-bottom:2px solid #fff2d8;
+  transform:rotate(45deg);animation:bounce 1.6s ease-in-out infinite;
+}
+@keyframes bounce{0%,100%{transform:rotate(45deg) translate(0,0)}50%{transform:rotate(45deg) translate(6px,6px)}}
+
+.card{
+  position:absolute;left:50%;top:50%;
+  transform:translate(-50%,-50%);
+  width:min(480px,86vw);
+  padding:38px 34px;
+  background:rgba(30,16,8,.62);
+  border:1px solid rgba(255,222,150,.25);
+  border-radius:18px;
+  backdrop-filter:blur(6px);
+  text-align:center;
+  box-shadow:0 20px 60px rgba(0,0,0,.5);
+  will-change:opacity,transform;
+}
+.card .date{
+  font-family: Georgia, serif;
+  letter-spacing:4px;font-size:.75rem;text-transform:uppercase;
+  color:#f6c76b;margin-bottom:14px;
+}
+.card h1{
+  font-style:italic;font-weight:400;
+  font-size:clamp(1.5rem,4vw,2.1rem);
+  color:#fff6e2;line-height:1.25;margin-bottom:20px;
+  text-shadow:0 0 18px rgba(255,190,90,.25);
+}
+.card p{
+  font-size:1rem;line-height:1.85;color:#f3e6d2;margin-bottom:6px;
+}
+.card .sign{
+  margin-top:18px;font-style:italic;color:#f6c76b;font-size:.95rem;
+}
+
+@media(max-width:480px){
+  .sun{width:190px;height:190px;top:30%;}
+  .card{padding:28px 22px;}
+}
+/* --- EFECTO DE LLUVIA DORADA / DESTELLOS --- */
+.raindrop {
+  position: absolute;
+  width: 1.5px;
+  height: 22px;
+  background: linear-gradient(180deg, rgba(255, 235, 170, 0), rgba(255, 215, 100, 0.65));
+  opacity: 0.4;
+  pointer-events: none;
+  animation: fall linear infinite;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(-30px);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.6;
+  }
+  85% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+/* --- ESTRELLAS LIGERAS --- */
+.star {
+  position: absolute;
+  background: #fff;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: twinkle var(--duration) ease-in-out infinite alternate;
+}
+
+@keyframes twinkle {
+  0% { opacity: 0.2; }
+  100% { opacity: 0.9; } /* Solo cambia opacidad, cero peso para el navegador */
+}
+/* --- ESTILOS DEL CARRUSEL DE FOTOS --- */
+.photo-frame {
+  width: min(220px, 65vw);
+  height: min(220px, 65vw);
+  margin: 12px auto 10px auto; /* Centrado automático con 'auto' a los lados */
+  border-radius: 14px;
+  overflow: hidden;
+  position: relative;
+  border: 2px solid rgba(255, 222, 150, 0.35);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+  background: #111;
+}
+
+.photo-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Con el formato cuadrado, cover se ve excelente para rellenar limpio */
+  display: none;
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+.photo-frame img.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(1.04); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.photo-dots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.photo-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  transition: background 0.3s, transform 0.3s;
+}
+
+.photo-dot.active {
+  background: #f6c76b;
+  transform: scale(1.2);
+}
+/* --- PANTALLA DE BIENVENIDA / INTRO PROFESIONAL --- */
+.welcome-overlay {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(135deg, #180e24 0%, #26162c 50%, #121016 100%);
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+.welcome-overlay.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.welcome-card {
+  background: rgba(20, 12, 30, 0.75);
+  border: 1px solid rgba(255, 215, 120, 0.35);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 24px;
+  padding: 40px 30px;
+  width: min(420px, 90vw);
+  text-align: center;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7), 
+              0 0 30px rgba(255, 201, 60, 0.15);
+  animation: modalPopUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes modalPopUp {
+  0% {
+    transform: scale(0.85) translateY(20px);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+
+.welcome-badge {
+  display: inline-block;
+  background: rgba(255, 201, 60, 0.12);
+  color: #ffc93c;
+  border: 1px solid rgba(255, 201, 60, 0.3);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  letter-spacing: 0.5px;
+}
+
+.welcome-title {
+  font-family: Georgia, serif;
+  font-size: 1.9rem;
+  color: #fff6e2;
+  margin-bottom: 12px;
+  font-weight: normal;
+  letter-spacing: 0.5px;
+}
+
+.welcome-subtitle {
+  font-size: 0.95rem;
+  color: #d8c8b4;
+  margin-bottom: 32px;
+  line-height: 1.5;
+}
+
+.welcome-btn {
+  position: relative;
+  background: linear-gradient(135deg, #ffc93c 0%, #f2971a 100%);
+  color: #1a0f08;
+  border: none;
+  width: 100%;
+  padding: 14px 24px;
+  font-size: 1.05rem;
+  font-weight: bold;
+  font-family: Georgia, serif;
+  border-radius: 12px;
+  cursor: pointer;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(242, 151, 26, 0.4);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.welcome-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(242, 151, 26, 0.6);
+}
+
+.welcome-btn:active {
+  transform: translateY(1px);
+}
+/* --- CONTENEDOR CUADRADO Y MÁS GRANDE PARA BUBU.GIF --- */
+.welcome-img-container {
+  width: 150px;           /* Subimos el ancho a 150px */
+  height: 150px;          /* Subimos el alto a 150px para hacerlo cuadrado */
+  margin: 0 auto 18px auto;
+  border-radius: 20px;    /* Bordes redondeados elegantes tipo tarjeta */
+  overflow: hidden;
+  border: 2px solid rgba(255, 201, 60, 0.5);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+  background: #ffffff;    /* Fondo blanco para que combine con el GIF */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}.welcome-bear-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Cambiado de cover a contain para que se vea todo el GIF completito */
+  animation: floatBears 3s ease-in-out infinite alternate;
+}
+/* --- EFECTO DE LLUVIA DE CORAZONES Y FLARES EN LA BIENVENIDA --- */
+.welcome-overlay {
+  overflow: hidden; /* Evita barras de desplazamiento por los elementos que caen */
+}
+
+/* Aseguramos que la tarjeta esté por encima de la lluvia */
+.welcome-card {
+  position: relative;
+  z-index: 10;
+}
+
+.welcome-fx-item {
+  position: absolute;
+  top: -40px;
+  user-select: none;
+  pointer-events: none;
+  animation: fallAndSpin linear infinite;
+  z-index: 1;
+  filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.7)); /* Efecto flare / brillo */
+}
+
+@keyframes fallAndSpin {
+  0% {
+    transform: translateY(-30px) rotate(0deg) scale(0.8);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.85;
+  }
+  85% {
+    opacity: 0.85;
+  }
+  100% {
+    transform: translateY(105vh) rotate(360deg) scale(1.1);
+    opacity: 0;
+  }
+}
+/* Clase para ocultar la bienvenida suavemente */
+.welcome-overlay.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+/* --- CORRECCIÓN RESPONSIVE PARA EL CAMPO DE GIRASOLES EN MÓVIL --- */
+@media (max-width: 768px) {
+  #field {
+    transform: scale(0.8);
+    transform-origin: bottom center;
+  }
+  
+  /* Ajuste para que las flores no se encimen demasiado en pantallas angostas */
+  .flower {
+    transform: scale(0.85);
+  }
+}
+/* --- VISTA MÓVIL FLUIDA Y CON MOVIMIENTO --- */
+@media (max-width: 768px) {
+  /* Permitimos que las flores conserven sus animaciones naturales y ajustamos el contenedor */
+  #field {
+    width: 100% !important;
+  }
+
+  /* Desplazamos las flores de la izquierda hacia afuera sin apagar sus animaciones */
+  #field .flower:nth-child(odd) {
+    margin-left: -20px !important;
+  }
+
+  /* Desplazamos las flores de la derecha hacia afuera */
+  #field .flower:nth-child(even) {
+    margin-right: -20px !important;
+  }
+
+  /* Fijamos la tarjeta de texto flotando limpia y ordenada en el carril inferior */
+  #instruction {
+    position: fixed !important;
+    bottom: 90px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 88% !important;
+    max-width: 310px !important;
+    z-index: 99999 !important;
+    background: rgba(15, 8, 25, 0.95) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9) !important;
+  }
+}
